@@ -1,0 +1,45 @@
+{
+	"Comment": "Basic step function process to Validate IP and cellphone",
+	"StartAt": "Validate",
+	"States": {
+		"Validate": {
+			"Type": "Task",
+			"Resource": "<FMI_1>",
+			"Next": "Parallel"
+		},
+		"Parallel": {
+			"Type": "Parallel",
+			"Branches": [{
+					"StartAt": "Tag",
+					"States": {
+						"Tag": {
+							"Type": "Task",
+							"Resource": "<FMI_2>",
+							"End": true
+						}
+					}
+				},{
+					"StartAt": "Sentiment",
+					"States": {
+						"Sentiment": {
+							"Type": "Task",
+							"Resource": "<FMI_3>",
+							"End": true
+						}
+					}
+				}
+			],
+			"Next": "Publish"
+		},
+		"Publish": {
+			"Type": "Task",
+			"Resource": "<FMI_4>",
+			"Next": "CreatePreSignedUrl"
+		},
+		"CreatePreSignedUrl": {
+			"Type": "Task",
+			"Resource": "<FMI_5>",
+			"End": true
+		}
+	}
+}

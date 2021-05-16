@@ -1,0 +1,16 @@
+{
+	"Comment": "Basic step function process to Validate IP and cellphone",
+	"StartAt": "Validate",
+	"States": {
+		"Validate": {
+			"Type": "Task",
+			"Resource": "<FMI_1>",
+			"Next": "CreatePreSignedUrl"
+		},
+		"CreatePreSignedUrl": {
+			"Type": "Task",
+			"Resource": "<FMI_2>",
+			"End": true
+		}
+	}
+}

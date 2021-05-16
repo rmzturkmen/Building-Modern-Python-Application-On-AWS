@@ -1,0 +1,30 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile (
+            'com.amazonaws:aws-java-sdk-stepfunctions:1.11.81',
+            'com.amazonaws:aws-java-sdk-iam:1.11.799',
+            'commons-io:commons-io:+',
+    )
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
+    archiveFileName = "stepfun.zip"
+    destinationDirectory = file("$buildDir/deployment-package")
+}
+
+compileJava   {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+build.dependsOn buildZip
